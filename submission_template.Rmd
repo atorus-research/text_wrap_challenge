@@ -1,0 +1,99 @@
+---
+title: "Submission Template"
+author: "<Your Name Here>"
+date: "8/1/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+# We're using `require()` here because you will need these packages to run, test, and check against the baseline
+require(stringr)
+require(stringi)
+require(testthat)
+require(microbenchmark)
+require(ggplot2)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Session Info
+
+Before we get started - let's make sure we know what tools you're working with
+
+```{r sessionInfo}
+sessionInfo
+```
+## Load in the test set and the solutions
+
+The objects `text` and `solutions` will be used to test and check your work.
+
+```{r test and solutions}
+text <- c(
+   "Pneumonoultramicroscopicsilicovolcanoconiosis is a really long word", 
+   "It's a name that has been invented for a lung disease caused by breathing in very small pieces of ash or dust", 
+   "Pneumono refers to the lung. Ultra means extremely, microscopic means tiny, silica is sand, volcano is self-evident, and coniosis is scarring.")
+
+solutions <- c("Pneumonou-\nltramicro-\nscopicsil-\nicovolcan-\noconiosis\nis a\nreally\nlong word",
+               "It's a\nname that\nhas been\ninvented\nfor a lung\ndisease\ncaused by\nbreathing\nin very\nsmall\npieces\nof ash or\ndust",
+               "Pneumono\nrefers to\nthe lung.\nUltra\nmeans\nextremely,\nmicroscop-\nic means\ntiny,\nsilica\nis sand,\nvolcano\nis self-\nevident,\nand\nconiosis\nis\nscarring.")
+```
+
+## Establish the baseline within your environment
+
+Everyone's machines will run at different speeds! So let's test the baseline in your environment so you can have a fair comparison.
+
+```{r baseline}
+base_bench <- microbenchmark::microbenchmark(
+   str_wrap(rep(text, 1000), width=10),
+   unit='s'
+   )
+
+microbenchmark:::autoplot.microbenchmark(base_bench) +
+   ggplot2::theme_bw()
+```
+
+## Function template
+
+Use this function template to submit your work. You're free to do whatever you want - but this template sets you up with the expectations laid out within the blog post.
+
+```{r template}
+overflow_wrap_solution <- function(text, width = 10) {
+   
+}
+```
+
+## Check your work
+
+Before you check the performance, make sure that your function produces the correct results. You can use this chunk to evaluate
+
+```{r check work}
+testthat::test_that("All good!", {
+   # Baseline
+   base <- str_wrap(text, width=10)
+   # Your solution
+   check <- overflow_wrap_solution(text, width=10)
+   # Evaluate
+   testthat::expect_equal(base, check)
+})
+```
+
+## Benchmark it!
+
+Great - now you know your solution works. Let's benchmark and see how it performs.
+
+```{r benchmark}
+solution_bench <- microbenchmark::microbenchmark(
+   overflow_wrap_solution(rep(text, 1000), width=10),
+   unit='s'
+   )
+
+microbenchmark:::autoplot.microbenchmark(base_bench) +
+   ggplot2::theme_bw()
+```
+
+And finally, let's look at how it compares to baseline. To keep it simple we're just going to use the mean. 
+
+```{r compare}
+summary(solution_bench)$mean - summary(base_bench)$mean
+```
+
+So - how'd you do? 
