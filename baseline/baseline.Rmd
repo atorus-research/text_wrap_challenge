@@ -1,7 +1,7 @@
 ---
 title: "Text Wrap Challenge"
 author: "Mike Stackhouse"
-date: "7/15/2021"
+date: "`r Sys.Date()`"
 output: html_document
 ---
 
@@ -17,14 +17,14 @@ knitr::opts_chunk$set(echo = TRUE)
 
 Let's have some fun. 
 
-In this first post of the series, I'm going to present a problem. Later in the series I'll walk through my solutions step-by-step and explain how I've solved it. **But you - the reader - I challenge you to do better**. And when you do, share your solution! Some friendly competition is always a good time. 
+This is the first post of a series. In this first post, I’m going to present a problem and lay out some guidelines. In subsequent posts, I'll walk through several different solutions to this problem - my solutions. **But you - the reader - I challenge you to do better**. And when you do, share your solution! Some friendly competition is always a good time.
 
-_To share your solution, follow the instructions in the README of our repository right [here](https://github.com/atorus-research/text_wrap_challenge). You can also find all the code associated with this post within that repostiory._
+_To share your solution, follow the instructions in the README of our [GitHub Repo](https://github.com/atorus-research/text_wrap_challenge) and in future posts we'll feature them on our site! You can also find all the code associated with this post within that repository_
 
 
 # Some Background
 
-The R world is filled with a number of wonderful packages, and there are several different solutions for the creation of tables, including my two favorites [{huxtable}](https://hughjonesd.github.io/huxtable/) and [{gt}](https://gt.rstudio.com/). Particularly in the world of HTML, these packages make creating tables incredibly easy, and as the user you don't need to think about any of the messy bits that have to happen under the hood. 
+The R world is filled with a number of wonderful packages. For example, if you want to create beautiful tables there are several different solution, including my two favorites [{huxtable}](https://hughjonesd.github.io/huxtable/) and [{gt}](https://gt.rstudio.com/). Particularly in the world of HTML, these packages make creating tables incredibly easy, and as the user you don't need to think about any of the messy bits that have to happen under the hood. 
 
 When you get into the land of PDF and RTF, things become - well. Less fun. Advances in the packages available have taken away a lot of ugly challenges, particularly with everything that R Markdown has to offer. But every now and then, something creeps up that just **drives you mad**. Which brings us to the today's topic - word wrapping!
 
@@ -54,9 +54,9 @@ Great - we've got some long strings to play with. So what's our goal? Imagine yo
 - If enough space is available, the string should be wrapped at the word.
 - If a single word exceeds the allotted width, that word should be split using hyphenation (-)
 
-![](../img/goal.png)
+Historically, at least in the SAS&reg; world, splitting at the word was the hard part. It's a complex problem to solve! But in the R world we get extremely elegant solutions to this that are easy to implement using {[stringr](https://stringr.tidyverse.org/index.html)} (and {[stringi](https://stringi.gagolewski.com/)} under the hood).
 
-Historically, at least in the SAS&reg; world, splitting at the word was the hard part. It's a complex problem to solve! But in the R world we get extremely elegant solutions to this that are easy to implement using {[stringr](https://stringr.tidyverse.org/index.html)} (and {[stringi](https://stringi.gagolewski.com/)} under the hood). 
+![](../img/goal.png)
 
 What we don't get is the second point: hyphenated line splitting of long words. At least - I couldn't find an available solution myself. And so begins the challenge: **write a function that meets the above two requirements**. For consistency, I'll add two more:
 
@@ -95,6 +95,8 @@ microbenchmark:::autoplot.microbenchmark(base_bench) +
    ggplot2::theme_bw()
 ```
 
-Note that this method is _incredibly_ efficient. This is the power of the {stringi} package, which implements this wrapping algorithm in C under the hood. But as we move forward, remember that to process about 3000 strings, the baseline is only about .04 seconds. 
+Note that this method is _incredibly_ efficient. This is the power of the {stringi} package, which implements this wrapping algorithm in C under the hood. But as we move forward, remember that to process about 3000 strings, the baseline is only about .04 seconds (but be sure to test on your own machine!).
 
-Alrighty - tune in next week to see my first solution. After that, I have three more solutions that progressively make improvements, which I'll be posting each week. So go! Off to the races! Give this a try, and we look forward to seeing your solutions! 
+Alrighty - tune in next week to see my first solution. After that, I have three more solutions that progressively make improvements, which I’ll be posting each week. So go! Off to the races! Give this a try, and we look forward to seeing your solutions!
+
+As a reminder - you can submit your solutions in our [GitHub](https://github.com/atorus-research/text_wrap_challenge) which has submission instructions in the README.
