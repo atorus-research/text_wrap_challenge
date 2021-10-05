@@ -2,7 +2,7 @@
 
 ![](./img/pdf_vs_html.png)
 
-Welcome! This is repository is associated with the Atorus blog post you can find right [here](#TODO). We're eager to see your solutions! 
+Welcome! This is repository is associated with the Atorus blog post you can find right [here](https://www.atorusresearch.com/word-wrap-challenge-part-1-the-problem/). We're eager to see your solutions! 
 
 After each blog post in this series is released, this repository will be updated. Each post has its own folder, and you can find the initial post within the [baseline](./baseline/) folder of this repository. We all have different environments, so you can find what I have used in the file [sessionInfo.txt](./sessionInfo.txt)
 
